@@ -1,12 +1,16 @@
-import '../App.css'
-
+import './main.css'
+import LeftSidebar from './left-side.jsx';
+import RightSidebar from './right-side.jsx';
+import Header from './header.jsx';
 function App() {
     return (
-        <div className="card">
-            <div className="card-body">
-
-            </div>
-        </div>
+        <>
+       <Header />
+      <div className="main-card">
+         <LeftSidebar />
+         <RightSidebar />
+      </div>
+        </>
     )
 }
 
