@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:12345678@localhost:5432/chat_app?schema=public"
+}
+
+model User {
+  id        Int     @id @default(autoincrement())
+  name      String  @db.VarChar(50)
+  lastName  String  @db.VarChar(50)
+  email     String  @unique @db.VarChar(50)
+  password  String  @db.VarChar(50)
+  genderId  Int     @db.SmallInt()
+  phone     String? @db.VarChar(50)
+  birthDate String? @db.VarChar(10)
+}
