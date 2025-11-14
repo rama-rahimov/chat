@@ -5,7 +5,7 @@ import {ValidationPipe} from "@nestjs/common";
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: 'https://chat-test-api-g5f4.onrender.com',
+    origin: 'https://chat-test-nuaq.onrender.com/',
     methods: 'GET,HEAD,PUT,POST,DELETE,OPTIONS',
     credentials: true,
   });
