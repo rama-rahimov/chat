@@ -20,7 +20,7 @@ function Main() {
         }).then((response) => response.json()).then((data) => {
             setMyData(data);
         })
-        const newSocket = io('http://localhost:3000/chat', {
+        const newSocket = io('https://chat-test-api-g5f4.onrender.com/chat', {
             autoConnect:false,
             auth: { token }
         });
