@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy:{
       '/api':{
-        target: 'https://chat-test-api-g5f4.onrender.com',
+        target: 'https://chat-test-api-g5f4.onrender.com/',
         changeOrigin: true,
         secure: false
       }
