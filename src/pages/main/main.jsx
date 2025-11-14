@@ -13,7 +13,7 @@ function Main() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) return ;
-        fetch('http://localhost:3000/api/profile/me', {
+        fetch('/api/profile/me', {
             headers: {
                 Authorization: `Bearer ${token}`,
             }

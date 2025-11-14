@@ -18,7 +18,7 @@ function Registration() {
         if (check) {
             alert("Please fill all fields");
         }else {
-            const result = await fetch("http://localhost:3000/api/auth/registration", {
+            const result = await fetch("/api/auth/registration", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
