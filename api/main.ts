@@ -5,7 +5,18 @@ import {ValidationPipe} from "@nestjs/common";
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: ['https://chat-test-nuaq.onrender.com', 'http://localhost:5173'],
+    origin: (origin, callback) => {
+      console.log("origin", origin);
+      const allowed = [
+        'https://chat-test-nuaq.onrender.com', // фронт продакшн
+        'http://localhost:5173'                // локальная разработка
+      ];
+      if (!origin || allowed.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: 'GET,HEAD,PUT,POST,DELETE,OPTIONS',
     credentials: true,
   });
