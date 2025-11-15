@@ -18,7 +18,7 @@ function Registration() {
         if (check) {
             alert("Please fill all fields");
         }else {
-            const result = await fetch("/api/auth/registration", {
+            const result = await fetch(`${import.meta.env.TEST_API_URL}/api/auth/registration`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

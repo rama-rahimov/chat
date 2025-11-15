@@ -7,7 +7,7 @@ function LeftSide({ setMessages, setSelectedUserId }) {
         e.preventDefault();
         (async () => {
             try {
-                const messagesJson = await fetch(`/api/chat/${user2Id}`,{
+                const messagesJson = await fetch(`${import.meta.env.TEST_API_URL}/api/chat/${user2Id}`,{
                     headers:{
                         "Authorization": `Bearer ${localStorage.getItem("token")}`,
                     }
@@ -28,7 +28,7 @@ function LeftSide({ setMessages, setSelectedUserId }) {
     useEffect(() => {
         (async () => {
             try {
-                const usersJson = await fetch("/api/profile/users", {
+                const usersJson = await fetch(`${import.meta.env.TEST_API_URL}/api/profile/users`, {
                     headers: {
                         "Authorization": `Bearer ${localStorage.getItem("token")}`
                     }
