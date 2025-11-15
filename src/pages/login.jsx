@@ -10,7 +10,7 @@ function Login() {
         if (!email.length || !password.length) {
             alert("Please fill all fields");
         }else {
-            const result = await fetch("/api/auth/login", {
+            const result = await fetch(`${import.meta.env.TEST_API_URL}/api/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
