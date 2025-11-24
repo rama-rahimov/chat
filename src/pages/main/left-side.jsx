@@ -18,7 +18,7 @@ function LeftSide({ setMessages, setSelectedUserId, setRoomId }) {
         e.preventDefault();
         (async () => {
             try {
-                const messagesJson = await fetch(`${import.meta.env.VITE_TEST_API_URL}/api/chat/${user2Id}`,{
+                const messagesJson = await fetch(`${import.meta.env.VITE_TEST_API_URL}/api/chat/${user.id}`,{
                     headers:{
                         "Authorization": `Bearer ${localStorage.getItem("token")}`,
                     }
