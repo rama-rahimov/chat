@@ -16,7 +16,7 @@ export class LlamaInfrastructure implements BotRepository{
     const taakk = await openChatAI.models.list();
     console.log({ taakk });
     const result =   await openChatAI.chat.completions.create({
-      model: "meta-llama/llama-3.1-8b-instruct",
+      model: "llama-3.1-chat",
       messages: [
        {
         "role": "user",
