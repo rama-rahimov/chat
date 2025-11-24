@@ -14,14 +14,14 @@ function Main() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) return ;
-        fetch(`/api/profile/me`, {
+        fetch(`${import.meta.env.VITE_TEST_API_URL}/api/profile/me`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
         }).then((response) => response.json()).then((data) => {
             setMyData(data);
         })
-        const newSocket = io(`${import.meta.env.VITE_LOCAL_URL}/chat`, {
+        const newSocket = io(`${import.meta.env.VITE_TEST_API_URL}/chat`, {
             autoConnect:false,
             auth: { token }
         });
