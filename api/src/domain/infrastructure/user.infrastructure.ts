@@ -32,4 +32,18 @@ export class UserInfrastructure implements IUserRepository {
           }
       }));
     }
+
+    async findByUsername(username:string, userId:number):Promise<User[] | null> {
+       return (await this.database.user.findMany({
+            where:{
+                id:{
+                  not:userId
+                },
+                name:{
+                    contains:username,
+                    mode:"insensitive"
+                }
+            }
+        }))
+    }
 }

@@ -8,6 +8,7 @@ function Main() {
     const [myData, setMyData] = useState({});
     const [messages, setMessages] = useState([]);
     const [selectedUserId, setSelectedUserId] = useState(null);
+    const [roomId, setRoomId] = useState(null);
     const [socket, setSocket] = useState(null); // пока нет сокета
 
     useEffect(() => {
@@ -40,8 +41,8 @@ function Main() {
     },[])
     return (
       <div className="main-card">
-         <LeftSidebar setMessages={setMessages} setSelectedUserId={setSelectedUserId} />
-          {socket && <RightSidebar messages={messages} selectedUserId={selectedUserId} socket={socket} myData={myData} />}
+         <LeftSidebar setMessages={setMessages} setSelectedUserId={setSelectedUserId} setRoomId={setRoomId} />
+          {socket && <RightSidebar messages={messages} selectedUserId={selectedUserId} roomId={roomId} socket={socket} myData={myData} />}
       </div>
     )
 }

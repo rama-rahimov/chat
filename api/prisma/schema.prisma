@@ -10,37 +10,50 @@ datasource db {
 model User {
   id         Int      @id @default(autoincrement())
   name       String   @db.VarChar(100)
-  lastName   String   @db.VarChar(100)
-  email      String   @unique @db.VarChar(100)
-  password   String   @db.VarChar(400)
-  genderId   Int      @db.SmallInt()
+  lastName   String?  @db.VarChar(100)
+  email      String?  @unique @db.VarChar(100)
+  password   String?  @db.VarChar(400)
+  genderId   Int?     @db.SmallInt()
   phone      String?  @db.VarChar(100)
   birthDate  String?  @db.VarChar(50)
+  isBot      Int      @default(0) @db.SmallInt()
   created_at DateTime @default(now()) @db.Timestamp()
 
-  chats1  Chat[]    @relation("ChatUser1")
-  chats2  Chat[]    @relation("ChatUser2")
-  Message Message[]
+  Message             Messages[]
+  ConversationMembers ConversationMembers[]
+  createByUser        Conversations[]
 }
 
-model Chat {
-  id         Int      @id @default(autoincrement())
-  user1Id    Int
-  user2Id    Int
-  created_at DateTime @default(now()) @db.Timestamp()
+model Messages {
+  id             Int      @id @default(autoincrement())
+  conversationId Int
+  senderId       Int
+  text           String
+  created_at     DateTime @default(now()) @db.Timestamp()
 
-  user1   User      @relation("ChatUser1", fields: [user1Id], references: [id])
-  user2   User      @relation("ChatUser2", fields: [user2Id], references: [id])
-  Message Message[]
+  sender       User          @relation(fields: [senderId], references: [id])
+  conversation Conversations @relation(fields: [conversationId], references: [id])
 }
 
-model Message {
-  id         Int      @id @default(autoincrement())
-  chatId     Int
-  senderId   Int
-  text       String
-  created_at DateTime @default(now()) @db.Timestamp()
+model Conversations {
+  id        Int      @id @default(autoincrement())
+  type      String   @db.VarChar(50)
+  name      String?  @db.VarChar(150)
+  image     String?
+  createBy  Int?
+  create_at DateTime @default(now()) @db.Timestamp()
 
-  chat   Chat @relation(fields: [chatId], references: [id])
-  sender User @relation(fields: [senderId], references: [id])
+  createByUser        User?                 @relation(fields: [createBy], references: [id])
+  messages            Messages[]
+  ConversationMembers ConversationMembers[]
+}
+
+model ConversationMembers {
+  id             Int      @id @default(autoincrement())
+  userId         Int
+  conversationId Int
+  create_at      DateTime @default(now()) @db.Timestamp()
+
+  conversation Conversations @relation(fields: [conversationId], references: [id])
+  user         User          @relation(fields: [userId], references: [id])
 }

@@ -9,6 +9,7 @@ export class RegistrationUseCase {
     private readonly userRepository: IUserRepository) {}
    async registration(input){
        try {
+           console.log("registration request", input);
         const user: User | null = await this.userRepository.findByEmail(input.email);
         if ((user || {}).id){
           throw new Error('User already exists');

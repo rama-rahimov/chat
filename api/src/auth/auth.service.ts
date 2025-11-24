@@ -7,12 +7,12 @@ import {LoginUseCase} from "./application/login.use-case";
 @Injectable()
 export class AuthService {
     constructor(private readonly registrationUseCase: RegistrationUseCase,
-                private readonly loginUseCase: LoginUseCase,) {}
-    registration(user:RegisterDto){
-      return this.registrationUseCase.registration(user);
+     private readonly loginUseCase: LoginUseCase,) {}
+   async registration(user:RegisterDto){
+      return await this.registrationUseCase.registration(user);
     }
 
-    login(user:LoginDto){
-     return this.loginUseCase.login(user);
+   async login(user:LoginDto){
+     return await this.loginUseCase.login(user);
     }
 }

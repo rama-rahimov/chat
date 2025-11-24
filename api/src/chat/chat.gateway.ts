@@ -27,10 +27,19 @@ export class ChatGateway {
         }
    }
 
+   @SubscribeMessage("joinRoom")
+   handleJoinRoom(@MessageBody() roomId: number, @ConnectedSocket() client:Socket){
+       client.join(String(roomId));
+       console.log(`User ${client.data.user.id} joined room ${roomId}`);
+   }
+
     @SubscribeMessage('send_message')
-    handleEvent(@MessageBody() data: ChatMessageDto,
+   async handleEvent(@MessageBody() data: ChatMessageDto,
      @ConnectedSocket() client: Socket) {
-      this.chatService.saveChatUseCase(data, client.data.user.id);
-      this.server.emit('message', {...data, senderId: client.data.user.id});
+     this.server.to(String(data.roomId)).emit('message', {...data, senderId: client.data.user.id});
+     let content = await this.chatService.saveChatUseCase(data, client.data.user.id);
+      if(data.isBot){
+          this.server.to(String(data.roomId)).emit('message', {...data, message:content, senderId: data.toUserId});
+      }
     }
 }

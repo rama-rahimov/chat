@@ -1,13 +1,13 @@
 import "./main.css";
 import {useEffect, useState} from "react";
-function RightSide({ messages = [], selectedUserId, socket, myData }) {
+function RightSide({ messages = [], selectedUserId, socket, myData, roomId }) {
     const [message, setMessage] = useState("");
     const [arrMessage, setArrMessage] = useState([]);
-    const [userId, setUserId] = useState(null);
+    const [user, setUser] = useState({});
     function handleSubmit(e){
         e.preventDefault();
         socket.emit('send_message', {
-            message, id: userId
+          message, ...user, type: 1, roomId
         });
         setMessage("")
     }
@@ -23,9 +23,9 @@ function RightSide({ messages = [], selectedUserId, socket, myData }) {
     },[]);
     useEffect(() => {
         setArrMessage(messages);
-        setUserId(selectedUserId)
-    },[messages, selectedUserId]);
-    console.log({arrMessage});
+        setUser({toUserId: (selectedUserId || {}).userId, isBot: (selectedUserId || {}).isBot});
+        socket.emit("joinRoom", roomId);
+    },[messages, selectedUserId, roomId]);
     return (
         <form onSubmit={handleSubmit} className="right-card">
             <div className="chat-container">
@@ -36,7 +36,7 @@ function RightSide({ messages = [], selectedUserId, socket, myData }) {
                         ))
                     }
                 </div>
-                {userId ? <div className="input-box">
+                {user.toUserId ? <div className="input-box">
                     <input value={message} type="text" placeholder="Write a message..." onChange={(e) => setMessage(e.target.value)} />
                 </div>: ""}
             </div>
