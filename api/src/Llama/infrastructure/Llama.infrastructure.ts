@@ -9,7 +9,7 @@ export class LlamaInfrastructure implements BotRepository{
         baseURL: "https://openrouter.ai/api/v1",
         apiKey: "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",
         defaultHeaders: {
-            "HTTP-Referer": "http://localhost:5173/", // Optional. Site URL for rankings on openrouter.ai.
+            "HTTP-Referer": "https://chat-test-nuaq.onrender.com/", // Optional. Site URL for rankings on openrouter.ai.
             "X-Title": "chat", // Optional. Site title for rankings on openrouter.ai.
         },
     });
