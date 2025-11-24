@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://chat_app_xm5k_user:BMXFd77vjNEmlc8VIS5oFvgQicOvwgvL@dpg-d4bhsr0dl3ps739dha80-a.oregon-postgres.render.com:5432/chat_app_xm5k?sslmode=require"
+  url      = "postgresql://postgres:12345678@localhost:5432/chat_app?schema=public"
 }
 
 model User {

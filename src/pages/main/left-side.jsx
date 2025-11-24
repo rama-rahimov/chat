@@ -5,7 +5,7 @@ function LeftSide({ setMessages, setSelectedUserId, setRoomId }) {
     const [name, setName] = useState("");
     const [users, setUsers] = useState([]);
     async function getAllUsers() {
-        const usersJson = await fetch(`${import.meta.env.VITE_TEST_API_URL}/api/profile/users`, {
+        const usersJson = await fetch(`/api/profile/users`, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
             }
@@ -18,7 +18,7 @@ function LeftSide({ setMessages, setSelectedUserId, setRoomId }) {
         e.preventDefault();
         (async () => {
             try {
-                const messagesJson = await fetch(`${import.meta.env.VITE_TEST_API_URL}/api/chat/${user2Id}`,{
+                const messagesJson = await fetch(`/api/chat/${user.id}`,{
                     headers:{
                         "Authorization": `Bearer ${localStorage.getItem("token")}`,
                     }
@@ -39,7 +39,7 @@ function LeftSide({ setMessages, setSelectedUserId, setRoomId }) {
     }
     const search = useCallback(debounce( (name) => {
         (async ()=> {
-            const usersJson = await fetch(`${import.meta.env.VITE_TEST_API_URL}/api/profile/find/${name}`,{
+            const usersJson = await fetch(`/api/profile/find/${name}`,{
                 headers:{
                     "Authorization": `Bearer ${localStorage.getItem("token")}`,
                 }

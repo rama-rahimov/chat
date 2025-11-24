@@ -10,9 +10,9 @@ function Login() {
         if (!email.length || !password.length) {
             alert("Please fill all fields");
         }else {
-            const url = `${import.meta.env.VITE_TEST_API_URL}/api/auth/login`;
+            const url = `/api/auth/login`;
             console.log('Fetch URL:', url);  // <-- вот здесь увидишь полный URL
-            const result = await fetch(`${import.meta.env.VITE_TEST_API_URL}/api/auth/login`, {
+            const result = await fetch(`/api/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
