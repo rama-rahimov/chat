@@ -8,4 +8,7 @@ export class ProfileUseCase {
     async allUsers(userId:number): Promise<User[]> {
       return  await this.IUserRepository.allUsers(userId);
     }
+    async findByUsername(userName:string, userId:number):Promise<User[] | null> {
+        return await this.IUserRepository.findByUsername(userName, userId);
+    }
 }

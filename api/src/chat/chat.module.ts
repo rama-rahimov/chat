@@ -1,4 +1,4 @@
-import {MiddlewareConsumer, Module, NestMiddleware, NestModule} from "@nestjs/common";
+import {MiddlewareConsumer, Module, NestModule} from "@nestjs/common";
 import { ChatGateway } from "./chat.gateway";
 import {ChatService} from "./chat.service";
 import {ChatUseCase} from "./application/chat.use-case";
@@ -8,13 +8,19 @@ import {MessageInfrastructure} from "./infrastructure/message.infrastructure";
 import {ChatController} from "./chat.controller";
 import {AuthMiddleware} from "../common/middleware/auth.middleware";
 import {UserInfrastructure} from "../domain/infrastructure/user.infrastructure";
+import {ConversationMemberInfrastructure} from "./infrastructure/conversationMember.infrastructure";
+import {ConversationInfrastructure} from "./infrastructure/conversation.infrastructure";
+import {LlamaModule} from "../Llama/Llama.module";
+import {LlamaInfrastructure} from "../Llama/infrastructure/Llama.infrastructure";
 
 @Module({
-    imports:[DatabaseModule],
+    imports:[DatabaseModule, LlamaModule],
     controllers:[ChatController],
     providers: [DatabaseModule, ChatGateway,
-        ChatService, ChatUseCase,
-        ChatInfrastructure,MessageInfrastructure,
+        ChatService, ChatUseCase,{
+            provide:"LlamaRepository",
+            useClass:LlamaInfrastructure,
+        },
         {
             provide: "ChatRepository",
             useClass: ChatInfrastructure
@@ -24,6 +30,12 @@ import {UserInfrastructure} from "../domain/infrastructure/user.infrastructure";
         },{
             provide:"IUserRepository",
             useClass: UserInfrastructure
+        },{
+            provide:"ConversationMemberRepository",
+            useClass:ConversationMemberInfrastructure
+        },{
+            provide:"ConversationRepository",
+            useClass:ConversationInfrastructure
         }]
 })
 export class ChatModule implements NestModule{

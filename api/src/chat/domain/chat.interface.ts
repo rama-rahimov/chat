@@ -1,6 +1,6 @@
 import {ChatDto} from "../dto/chat.dto";
 
 export interface ChatRepository{
-    findByIds(user1Id:number, user2Id:number):Promise<any>;
+    findByIds(user1Id:number, user2Id:number, type:string):Promise<any>;
     save(obj:{user1Id:number, user2Id:number}):Promise<ChatDto>;
 }

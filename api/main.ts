@@ -6,7 +6,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
     origin: (origin, callback) => {
-      console.log("origin", origin);
       const allowed = [
         'https://chat-test-nuaq.onrender.com', // фронт продакшн
         'http://localhost:5173'                // локальная разработка

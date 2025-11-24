@@ -1,4 +1,6 @@
 export class ChatMessageDto {
-    text: string;
+    message: string;
     toUserId:number;
+    roomId:number;
+    isBot: boolean;
 }
