@@ -1,21 +1,56 @@
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* занимает всю высоту окна */
+}
+
+.messages {
+    flex: 1; /* занимает всё пространство сверху */
+    overflow-y: auto; /* можно скроллить */
+    padding: 10px;
+}
+
+.input-box {
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    background: #fff;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 10px;
+}
+
+
 .left-card {
     height: 100vh;
-    width: 15%;
+    width: 25%;
     background-color: #aaaaaa;
+}
+.left-card h2 {
+    cursor: pointer;
 }
 .right-card {
     height: 100vh;
-    width: 85%;
+    width: 75%;
     background-color: wheat;
 }
 
 .main-card {
     display: flex;
     flex-direction: row;
-    left: 15%;
-    right: 85%;
+    height: 100vh;
+    left: 25%;
+    right: 75%;
 }
 
+.right-text{
+    text-align: right;
+}
+.right-card h4 {
+    margin: 0;
+    font-size: 18px;
+}
 .header {
     display: flex;
     flex-direction: column;

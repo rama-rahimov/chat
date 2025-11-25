@@ -4,36 +4,62 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {Link} from "react-router-dom";
 
-function App() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [startDate, setStartDate] = useState(null);
+function Registration() {
+    const [dataForm, setDataForm] = useState({});
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        let check = false;
+        for (const eElement of Object.values(dataForm)) {
+          if(!eElement){
+              check = true;
+              break;
+          }
+        }
+        if (check) {
+            alert("Please fill all fields");
+        }else {
+            const result = await fetch(`${import.meta.env.VITE_TEST_API_URL}/api/auth/registration`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({...dataForm, genderId: 1})
+            });
+            const fullResult = await result.json();
+            if (fullResult.error) {
+                alert(fullResult.message);
+            } else {
+                alert('Succesfull!');
+                navigate("/main");
+            }
+        }
+    }
     return (
         <div className="card">
-            <div className="card-body">
+            <form onSubmit={handleSubmit} className="card-body">
                 <h2>Registration</h2>
                 <div className="row">
                     <label htmlFor="name">Name</label>
-                    <input value={email} className="inputs" onChange={(e) => setEmail(e.target.value)} />
+                    <input value={dataForm.name} className="inputs" onChange={(e) => setDataForm((prev) => ({...prev, name: e.target.value}))} />
                 </div>
                 <div className="row">
-                    <label htmlFor="last_name">Last Name</label>
-                    <input value={password} className="inputs"  onChange={(e) => setPassword(e.target.value)} />
+                    <label htmlFor="lastName">Last Name</label>
+                    <input value={dataForm.lastName} className="inputs"  onChange={(e) => setDataForm((prev) => ({...prev, lastName: e.target.value}))} />
                 </div>
                 <div className="row">
                     <label htmlFor="email">Email</label>
-                    <input value={email} className="inputs" onChange={(e) => setEmail(e.target.value)} />
+                    <input value={dataForm.email} className="inputs" onChange={(e) => setDataForm((prev) => ({...prev, email: e.target.value}))} />
                 </div>
                 <div className="row">
                     <label htmlFor="password">Password</label>
-                    <input value={password} className="inputs"  onChange={(e) => setPassword(e.target.value)} />
+                    <input value={dataForm.password} className="inputs" type="password"  onChange={(e) => setDataForm((prev) => ({...prev, password: e.target.value}))} />
                 </div>
                 <div className="row">
-                    <label htmlFor="password">Age</label>
+                    <label htmlFor="birthDate">Age</label>
                     <div className="date-input-wrapper">
                     <DatePicker
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
+                        selected={dataForm.birthDate}
+                        onChange={(birthDate) => setDataForm((prevState) => ({...prevState, birthDate}))}
                         minDate={new Date("1900-01-01")}
                         maxDate={new Date()}
                         showPopperArrow={false}
@@ -46,9 +72,9 @@ function App() {
                 </div>
                 <button className="btn btn-primary btn-lg btn-block" type="submit">Apply</button>
                 <p>for login click <Link to='/'>login</Link></p>
-            </div>
+            </form>
         </div>
     )
 }
 
-export default App
+export default Registration

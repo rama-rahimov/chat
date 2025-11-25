@@ -1,27 +1,36 @@
 import '../App.css'
-import {useState, useEffect} from "react";
+import { useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
-
-function App() {
+function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Email:", email);
-        console.log("Password:", password);
-        navigate("/main");
-    }
-    useEffect(() => {
-        (async () => {
-            try {
-                let res = await fetch("http://localhost:3000/api");
-                console.log({res:res.json()});
-            }catch(err) {
-                console.log({err: err.message});
+        if (!email.length || !password.length) {
+            alert("Please fill all fields");
+        }else {
+            const url = `/api/auth/login`;
+            console.log('Fetch URL:', url);  // <-- вот здесь увидишь полный URL
+            const result = await fetch(`${import.meta.env.VITE_TEST_API_URL}/api/auth/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({email, password}),
+            });
+            const fullResult = await result.json();
+            if (fullResult.error) {
+                alert(fullResult.message);
+            } else {
+                alert('Succesfull!');
+                localStorage.removeItem("token");
+                localStorage.setItem('token', fullResult.token);
+                console.log({tooookkeeenn: localStorage.getItem('token')});
+                navigate("/main");
             }
-        })()
-    })
+        }
+    }
     return (
        <div className="card">
            <form onSubmit={handleSubmit} className="card-body">
@@ -33,7 +42,7 @@ function App() {
                </div>
                <div className="row">
                    <label htmlFor="password">Password</label>
-                   <input value={password} className="inputs"  onChange={(e) => setPassword(e.target.value)} />
+                   <input type="password" value={password} className="inputs"   onChange={(e) => setPassword(e.target.value)} />
                </div>
                <button className="btn btn-primary btn-lg btn-block" type="submit">Apply</button>
                <p>for registration click <Link to='/registration'>registration</Link></p>
@@ -42,4 +51,4 @@ function App() {
     )
 }
 
-export default App
+export default Login
